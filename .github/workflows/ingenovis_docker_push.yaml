@@ -1,0 +1,26 @@
+name: "Ingenovis Health Customer 5.1.1 Docker Build"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  pushLatestDockerImage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: DockerHub Login
+        run: echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t openapi-generator-cli:5.1.1-jtbeach .
+
+      - name: Tag Docker image
+        run: docker tag openapi-generator-cli:5.1.1-jtbeach ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
+
+      - name: Push Docker image
+        run: docker push ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
