@@ -13,14 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: DockerHub Login
         run: echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      - name: Build Docker image
-        run: docker build -t openapi-generator-cli:5.1.1-jtbeach .
-
-      - name: Tag Docker image
-        run: docker tag openapi-generator-cli:5.1.1-jtbeach ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
-
-      - name: Push Docker image
-        run: docker push ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
