@@ -206,6 +206,14 @@ export function exists(json: any, key: string) {
     return value !== null && value !== undefined;
 }
 
+type KeysOfType<T, U> = { [K in keyof T]: T[K] extends U ? K : never }[keyof T];
+type RequiredKeys<T> = Exclude<KeysOfType<T, Exclude<T[keyof T], undefined>>, undefined>
+export type OptionalKeys<T> = Omit<T, RequiredKeys<T>>
+
+export function isOptionalKey<T>(key: keyof T, obj: T): key is keyof OptionalKeys<T> {
+    return obj[key] === undefined;
+}
+
 export function querystring(params: HTTPQuery, prefix: string = ''): string {
     return Object.keys(params)
         .map((key) => {
