@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class Category: NSObject, Codable {
+@objc public class Category: NSObject, Codable, JSONEncodable {
 
     public var _id: Int64?
     public var _idNum: NSNumber? {
@@ -22,6 +24,7 @@ import AnyCodable
         self._id = _id
         self.name = name
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case _id = "id"
         case name
@@ -34,7 +37,5 @@ import AnyCodable
         try container.encodeIfPresent(_id, forKey: ._id)
         try container.encode(name, forKey: .name)
     }
-
-
-
 }
+

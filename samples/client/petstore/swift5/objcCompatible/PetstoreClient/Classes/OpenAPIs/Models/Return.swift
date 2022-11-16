@@ -6,10 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 /** Model for testing reserved words */
-@objc public class Return: NSObject, Codable {
+@objc public class Return: NSObject, Codable, JSONEncodable {
 
     public var _return: Int?
     public var _returnNum: NSNumber? {
@@ -21,6 +23,7 @@ import AnyCodable
     public init(_return: Int? = nil) {
         self._return = _return
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case _return = "return"
     }
@@ -31,7 +34,5 @@ import AnyCodable
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(_return, forKey: ._return)
     }
-
-
-
 }
+

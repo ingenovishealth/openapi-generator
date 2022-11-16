@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class Animal: NSObject, Codable {
+@objc public class Animal: NSObject, Codable, JSONEncodable {
 
     public var _className: String
     public var color: String? = "red"
@@ -17,6 +19,7 @@ import AnyCodable
         self._className = _className
         self.color = color
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case _className = "className"
         case color
@@ -29,7 +32,5 @@ import AnyCodable
         try container.encode(_className, forKey: ._className)
         try container.encodeIfPresent(color, forKey: .color)
     }
-
-
-
 }
+

@@ -4,10 +4,10 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_order**](StoreApi.md#delete_order) | **delete** /store/order/{orderId} | Delete purchase order by ID
-[**get_inventory**](StoreApi.md#get_inventory) | **get** /store/inventory | Returns pet inventories by status
-[**get_order_by_id**](StoreApi.md#get_order_by_id) | **get** /store/order/{orderId} | Find purchase order by ID
-[**place_order**](StoreApi.md#place_order) | **post** /store/order | Place an order for a pet
+[**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+[**get_inventory**](StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
+[**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
+[**place_order**](StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 
 
 
@@ -73,7 +73,7 @@ This endpoint does not need any parameter.
 > crate::models::Order get_order_by_id(order_id)
 Find purchase order by ID
 
-For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions
 
 ### Parameters
 
@@ -100,15 +100,17 @@ No authorization required
 
 ## place_order
 
-> crate::models::Order place_order(body)
+> crate::models::Order place_order(order)
 Place an order for a pet
+
+
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**body** | [**Order**](Order.md) | order placed for purchasing the pet | [required] |
+**order** | [**Order**](Order.md) | order placed for purchasing the pet | [required] |
 
 ### Return type
 
@@ -120,7 +122,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct TypeHolderExample: Codable, Hashable {
+internal struct TypeHolderExample: Codable, JSONEncodable, Hashable {
 
     internal var stringItem: String
     internal var numberItem: Double
@@ -23,6 +25,7 @@ internal struct TypeHolderExample: Codable, Hashable {
         self.boolItem = boolItem
         self.arrayItem = arrayItem
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case stringItem = "string_item"
         case numberItem = "number_item"
@@ -41,7 +44,5 @@ internal struct TypeHolderExample: Codable, Hashable {
         try container.encode(boolItem, forKey: .boolItem)
         try container.encode(arrayItem, forKey: .arrayItem)
     }
-
-
-
 }
+

@@ -6,15 +6,23 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class ArrayOfArrayOfNumberOnly: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.ArrayOfArrayOfNumberOnly")
+public typealias ArrayOfArrayOfNumberOnly = PetstoreClientAPI.ArrayOfArrayOfNumberOnly
+
+extension PetstoreClientAPI {
+
+public final class ArrayOfArrayOfNumberOnly: Codable, JSONEncodable, Hashable {
 
     public var arrayArrayNumber: [[Double]]?
 
     public init(arrayArrayNumber: [[Double]]? = nil) {
         self.arrayArrayNumber = arrayArrayNumber
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case arrayArrayNumber = "ArrayArrayNumber"
     }
@@ -26,8 +34,6 @@ public final class ArrayOfArrayOfNumberOnly: Codable, Hashable {
         try container.encodeIfPresent(arrayArrayNumber, forKey: .arrayArrayNumber)
     }
 
-
-
     public static func == (lhs: ArrayOfArrayOfNumberOnly, rhs: ArrayOfArrayOfNumberOnly) -> Bool {
         lhs.arrayArrayNumber == rhs.arrayArrayNumber
         
@@ -37,5 +43,6 @@ public final class ArrayOfArrayOfNumberOnly: Codable, Hashable {
         hasher.combine(arrayArrayNumber?.hashValue)
         
     }
+}
 
 }

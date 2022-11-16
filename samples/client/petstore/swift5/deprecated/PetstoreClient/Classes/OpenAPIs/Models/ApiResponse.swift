@@ -6,10 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 /** Describes the result of uploading an image resource */
-public struct ApiResponse: Codable, Hashable {
+public struct ApiResponse: Codable, JSONEncodable, Hashable {
 
     public var code: Int?
     public var type: String?
@@ -20,6 +22,7 @@ public struct ApiResponse: Codable, Hashable {
         self.type = type
         self.message = message
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case code
         case type
@@ -34,7 +37,5 @@ public struct ApiResponse: Codable, Hashable {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(message, forKey: .message)
     }
-
-
-
 }
+

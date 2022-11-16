@@ -37,18 +37,6 @@ namespace Org.OpenAPITools.Model
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Mammal" /> class
-        /// with the <see cref="Pig" /> class
-        /// </summary>
-        /// <param name="actualInstance">An instance of Pig.</param>
-        public Mammal(Pig actualInstance)
-        {
-            this.IsNullable = false;
-            this.SchemaType= "oneOf";
-            this.ActualInstance = actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Mammal" /> class
         /// with the <see cref="Whale" /> class
         /// </summary>
         /// <param name="actualInstance">An instance of Whale.</param>
@@ -65,6 +53,18 @@ namespace Org.OpenAPITools.Model
         /// </summary>
         /// <param name="actualInstance">An instance of Zebra.</param>
         public Mammal(Zebra actualInstance)
+        {
+            this.IsNullable = false;
+            this.SchemaType= "oneOf";
+            this.ActualInstance = actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Mammal" /> class
+        /// with the <see cref="Pig" /> class
+        /// </summary>
+        /// <param name="actualInstance">An instance of Pig.</param>
+        public Mammal(Pig actualInstance)
         {
             this.IsNullable = false;
             this.SchemaType= "oneOf";
@@ -105,17 +105,7 @@ namespace Org.OpenAPITools.Model
         }
 
         /// <summary>
-        /// Get the actual instance of `Pig`. If the actual instanct is not `Pig`,
-        /// the InvalidClassException will be thrown
-        /// </summary>
-        /// <returns>An instance of Pig</returns>
-        public Pig GetPig()
-        {
-            return (Pig)this.ActualInstance;
-        }
-
-        /// <summary>
-        /// Get the actual instance of `Whale`. If the actual instanct is not `Whale`,
+        /// Get the actual instance of `Whale`. If the actual instance is not `Whale`,
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of Whale</returns>
@@ -125,13 +115,23 @@ namespace Org.OpenAPITools.Model
         }
 
         /// <summary>
-        /// Get the actual instance of `Zebra`. If the actual instanct is not `Zebra`,
+        /// Get the actual instance of `Zebra`. If the actual instance is not `Zebra`,
         /// the InvalidClassException will be thrown
         /// </summary>
         /// <returns>An instance of Zebra</returns>
         public Zebra GetZebra()
         {
             return (Zebra)this.ActualInstance;
+        }
+
+        /// <summary>
+        /// Get the actual instance of `Pig`. If the actual instance is not `Pig`,
+        /// the InvalidClassException will be thrown
+        /// </summary>
+        /// <returns>An instance of Pig</returns>
+        public Pig GetPig()
+        {
+            return (Pig)this.ActualInstance;
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Org.OpenAPITools.Model
         {
             Mammal newMammal = null;
 
-            if (jsonString == null)
+            if (string.IsNullOrEmpty(jsonString))
             {
                 return newMammal;
             }
@@ -189,7 +189,7 @@ namespace Org.OpenAPITools.Model
             catch (Exception exception)
             {
                 // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine(String.Format("Failed to deserialize `{0}` into Pig: {1}", jsonString, exception.ToString()));
+                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into Pig: {1}", jsonString, exception.ToString()));
             }
 
             try
@@ -209,7 +209,7 @@ namespace Org.OpenAPITools.Model
             catch (Exception exception)
             {
                 // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine(String.Format("Failed to deserialize `{0}` into Whale: {1}", jsonString, exception.ToString()));
+                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into Whale: {1}", jsonString, exception.ToString()));
             }
 
             try
@@ -229,7 +229,7 @@ namespace Org.OpenAPITools.Model
             catch (Exception exception)
             {
                 // deserialization failed, try the next one
-                System.Diagnostics.Debug.WriteLine(String.Format("Failed to deserialize `{0}` into Zebra: {1}", jsonString, exception.ToString()));
+                System.Diagnostics.Debug.WriteLine(string.Format("Failed to deserialize `{0}` into Zebra: {1}", jsonString, exception.ToString()));
             }
 
             if (match == 0)
@@ -304,7 +304,7 @@ namespace Org.OpenAPITools.Model
         /// <param name="serializer">JSON Serializer</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue((String)(typeof(Mammal).GetMethod("ToJson").Invoke(value, null)));
+            writer.WriteRawValue((string)(typeof(Mammal).GetMethod("ToJson").Invoke(value, null)));
         }
 
         /// <summary>

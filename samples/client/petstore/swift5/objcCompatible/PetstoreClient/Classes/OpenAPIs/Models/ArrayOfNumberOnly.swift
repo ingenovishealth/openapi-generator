@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class ArrayOfNumberOnly: NSObject, Codable {
+@objc public class ArrayOfNumberOnly: NSObject, Codable, JSONEncodable {
 
     public var arrayNumber: [Double]?
 
     public init(arrayNumber: [Double]? = nil) {
         self.arrayNumber = arrayNumber
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case arrayNumber = "ArrayNumber"
     }
@@ -25,7 +28,5 @@ import AnyCodable
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(arrayNumber, forKey: .arrayNumber)
     }
-
-
-
 }
+

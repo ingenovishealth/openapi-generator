@@ -6,15 +6,23 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class SpecialModelName: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.SpecialModelName")
+public typealias SpecialModelName = PetstoreClientAPI.SpecialModelName
+
+extension PetstoreClientAPI {
+
+public final class SpecialModelName: Codable, JSONEncodable, Hashable {
 
     public var specialPropertyName: Int64?
 
     public init(specialPropertyName: Int64? = nil) {
         self.specialPropertyName = specialPropertyName
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case specialPropertyName = "$special[property.name]"
     }
@@ -26,8 +34,6 @@ public final class SpecialModelName: Codable, Hashable {
         try container.encodeIfPresent(specialPropertyName, forKey: .specialPropertyName)
     }
 
-
-
     public static func == (lhs: SpecialModelName, rhs: SpecialModelName) -> Bool {
         lhs.specialPropertyName == rhs.specialPropertyName
         
@@ -37,5 +43,6 @@ public final class SpecialModelName: Codable, Hashable {
         hasher.combine(specialPropertyName?.hashValue)
         
     }
+}
 
 }

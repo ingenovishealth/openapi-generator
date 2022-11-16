@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct AdditionalPropertiesClass: Codable, Hashable {
+public struct AdditionalPropertiesClass: Codable, JSONEncodable, Hashable {
 
     public var mapString: [String: String]?
     public var mapNumber: [String: Double]?
@@ -35,6 +37,7 @@ public struct AdditionalPropertiesClass: Codable, Hashable {
         self.anytype2 = anytype2
         self.anytype3 = anytype3
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case mapString = "map_string"
         case mapNumber = "map_number"
@@ -65,7 +68,5 @@ public struct AdditionalPropertiesClass: Codable, Hashable {
         try container.encodeIfPresent(anytype2, forKey: .anytype2)
         try container.encodeIfPresent(anytype3, forKey: .anytype3)
     }
-
-
-
 }
+

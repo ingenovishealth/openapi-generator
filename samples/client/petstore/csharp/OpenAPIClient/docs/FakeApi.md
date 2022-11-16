@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**FakeOuterNumberSerialize**](FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
 [**FakeOuterStringSerialize**](FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
 [**FakePropertyEnumIntegerSerialize**](FakeApi.md#fakepropertyenumintegerserialize) | **POST** /fake/property/enum-int | 
+[**TestBodyWithBinary**](FakeApi.md#testbodywithbinary) | **PUT** /fake/body-with-binary | 
 [**TestBodyWithFileSchema**](FakeApi.md#testbodywithfileschema) | **PUT** /fake/body-with-file-schema | 
 [**TestBodyWithQueryParams**](FakeApi.md#testbodywithqueryparams) | **PUT** /fake/body-with-query-params | 
 [**TestClientModel**](FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
@@ -19,7 +20,7 @@ Method | HTTP request | Description
 [**TestGroupParameters**](FakeApi.md#testgroupparameters) | **DELETE** /fake | Fake endpoint to test group parameters (optional)
 [**TestInlineAdditionalProperties**](FakeApi.md#testinlineadditionalproperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
 [**TestJsonFormData**](FakeApi.md#testjsonformdata) | **GET** /fake/jsonFormData | test json serialization of form data
-[**TestQueryParameterCollectionFormat**](FakeApi.md#testqueryparametercollectionformat) | **PUT** /fake/test-query-paramters | 
+[**TestQueryParameterCollectionFormat**](FakeApi.md#testqueryparametercollectionformat) | **PUT** /fake/test-query-parameters | 
 
 
 
@@ -118,8 +119,8 @@ namespace Example
 
             var apiInstance = new FakeApi(Configuration.Default);
             var pet = new Pet(); // Pet | Pet object that needs to be added to the store
-            var query1 = query1_example;  // string | query parameter (optional) 
-            var header1 = header1_example;  // string | header parameter (optional) 
+            var query1 = "query1_example";  // string | query parameter (optional) 
+            var header1 = "header1_example";  // string | header parameter (optional) 
 
             try
             {
@@ -346,7 +347,7 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
             var apiInstance = new FakeApi(Configuration.Default);
-            var body = 8.14;  // decimal? | Input number as post body (optional) 
+            var body = 8.14D;  // decimal? | Input number as post body (optional) 
 
             try
             {
@@ -421,7 +422,7 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
             var apiInstance = new FakeApi(Configuration.Default);
-            var body = body_example;  // string | Input string as post body (optional) 
+            var body = "body_example";  // string | Input string as post body (optional) 
 
             try
             {
@@ -546,13 +547,87 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## TestBodyWithBinary
+
+> void TestBodyWithBinary (System.IO.Stream body)
+
+
+
+For this test, the body has to be a binary file.
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class TestBodyWithBinaryExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
+            var apiInstance = new FakeApi(Configuration.Default);
+            var body = new System.IO.MemoryStream(System.IO.File.ReadAllBytes("/path/to/file.txt"));  // System.IO.Stream | image to upload
+
+            try
+            {
+                apiInstance.TestBodyWithBinary(body);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling FakeApi.TestBodyWithBinary: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **System.IO.Stream**| image to upload | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: image/png
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Success |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## TestBodyWithFileSchema
 
 > void TestBodyWithFileSchema (FileSchemaTestClass fileSchemaTestClass)
 
 
 
-For this test, the body for this request much reference a schema named `File`.
+For this test, the body for this request must reference a schema named `File`.
 
 ### Example
 
@@ -643,7 +718,7 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
             var apiInstance = new FakeApi(Configuration.Default);
-            var query = query_example;  // string | 
+            var query = "query_example";  // string | 
             var user = new User(); // User | 
 
             try
@@ -799,20 +874,20 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new FakeApi(Configuration.Default);
-            var number = 8.14;  // decimal | None
+            var number = 8.14D;  // decimal | None
             var _double = 1.2D;  // double | None
-            var patternWithoutDelimiter = patternWithoutDelimiter_example;  // string | None
-            var _byte = BYTE_ARRAY_DATA_HERE;  // byte[] | None
+            var patternWithoutDelimiter = "patternWithoutDelimiter_example";  // string | None
+            var _byte = System.Text.Encoding.ASCII.GetBytes("BYTE_ARRAY_DATA_HERE");  // byte[] | None
             var integer = 56;  // int? | None (optional) 
             var int32 = 56;  // int? | None (optional) 
-            var int64 = 789;  // long? | None (optional) 
+            var int64 = 789L;  // long? | None (optional) 
             var _float = 3.4F;  // float? | None (optional) 
-            var _string = _string_example;  // string | None (optional) 
-            var binary = BINARY_DATA_HERE;  // System.IO.Stream | None (optional) 
-            var date = 2013-10-20;  // DateTime? | None (optional) 
-            var dateTime = 2013-10-20T19:20:30+01:00;  // DateTime? | None (optional) 
-            var password = password_example;  // string | None (optional) 
-            var callback = callback_example;  // string | None (optional) 
+            var _string = "_string_example";  // string | None (optional) 
+            var binary = new System.IO.MemoryStream(System.IO.File.ReadAllBytes("/path/to/file.txt"));  // System.IO.Stream | None (optional) 
+            var date = DateTime.Parse("2013-10-20");  // DateTime? | None (optional) 
+            var dateTime = DateTime.Parse("2013-10-20T19:20:30+01:00");  // DateTime? | None (optional) 
+            var password = "password_example";  // string | None (optional) 
+            var callback = "callback_example";  // string | None (optional) 
 
             try
             {
@@ -878,7 +953,7 @@ void (empty response body)
 
 ## TestEnumParameters
 
-> void TestEnumParameters (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, List<string> enumFormStringArray = null, string enumFormString = null)
+> void TestEnumParameters (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, List<EnumClass> enumQueryModelArray = null, List<string> enumFormStringArray = null, string enumFormString = null)
 
 To test enum parameters
 
@@ -901,19 +976,20 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
             var apiInstance = new FakeApi(Configuration.Default);
-            var enumHeaderStringArray = enumHeaderStringArray_example;  // List<string> | Header parameter enum test (string array) (optional) 
-            var enumHeaderString = enumHeaderString_example;  // string | Header parameter enum test (string) (optional)  (default to -efg)
-            var enumQueryStringArray = enumQueryStringArray_example;  // List<string> | Query parameter enum test (string array) (optional) 
-            var enumQueryString = enumQueryString_example;  // string | Query parameter enum test (string) (optional)  (default to -efg)
-            var enumQueryInteger = 56;  // int? | Query parameter enum test (double) (optional) 
-            var enumQueryDouble = 1.2D;  // double? | Query parameter enum test (double) (optional) 
+            var enumHeaderStringArray = new List<string>(); // List<string> | Header parameter enum test (string array) (optional) 
+            var enumHeaderString = "_abc";  // string | Header parameter enum test (string) (optional)  (default to -efg)
+            var enumQueryStringArray = new List<string>(); // List<string> | Query parameter enum test (string array) (optional) 
+            var enumQueryString = "_abc";  // string | Query parameter enum test (string) (optional)  (default to -efg)
+            var enumQueryInteger = 1;  // int? | Query parameter enum test (double) (optional) 
+            var enumQueryDouble = 1.1D;  // double? | Query parameter enum test (double) (optional) 
+            var enumQueryModelArray = new List<EnumClass>(); // List<EnumClass> |  (optional) 
             var enumFormStringArray = new List<string>(); // List<string> | Form parameter enum test (string array) (optional)  (default to $)
-            var enumFormString = enumFormString_example;  // string | Form parameter enum test (string) (optional)  (default to -efg)
+            var enumFormString = "_abc";  // string | Form parameter enum test (string) (optional)  (default to -efg)
 
             try
             {
                 // To test enum parameters
-                apiInstance.TestEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, enumFormStringArray, enumFormString);
+                apiInstance.TestEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, enumQueryModelArray, enumFormStringArray, enumFormString);
             }
             catch (ApiException e)
             {
@@ -931,12 +1007,13 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enumHeaderStringArray** | **List&lt;string&gt;**| Header parameter enum test (string array) | [optional] 
+ **enumHeaderStringArray** | [**List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
- **enumQueryStringArray** | **List&lt;string&gt;**| Query parameter enum test (string array) | [optional] 
+ **enumQueryStringArray** | [**List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
  **enumQueryInteger** | **int?**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **double?**| Query parameter enum test (double) | [optional] 
+ **enumQueryModelArray** | [**List&lt;EnumClass&gt;**](EnumClass.md)|  | [optional] 
  **enumFormStringArray** | [**List&lt;string&gt;**](string.md)| Form parameter enum test (string array) | [optional] [default to $]
  **enumFormString** | **string**| Form parameter enum test (string) | [optional] [default to -efg]
 
@@ -996,10 +1073,10 @@ namespace Example
             var apiInstance = new FakeApi(Configuration.Default);
             var requiredStringGroup = 56;  // int | Required String in group parameters
             var requiredBooleanGroup = true;  // bool | Required Boolean in group parameters
-            var requiredInt64Group = 789;  // long | Required Integer in group parameters
+            var requiredInt64Group = 789L;  // long | Required Integer in group parameters
             var stringGroup = 56;  // int? | String in group parameters (optional) 
             var booleanGroup = true;  // bool? | Boolean in group parameters (optional) 
-            var int64Group = 789;  // long? | Integer in group parameters (optional) 
+            var int64Group = 789L;  // long? | Integer in group parameters (optional) 
 
             try
             {
@@ -1046,7 +1123,7 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **400** | Someting wrong |  -  |
+| **400** | Something wrong |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1150,8 +1227,8 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://petstore.swagger.io:80/v2";
             var apiInstance = new FakeApi(Configuration.Default);
-            var param = param_example;  // string | field1
-            var param2 = param2_example;  // string | field2
+            var param = "param_example";  // string | field1
+            var param2 = "param2_example";  // string | field2
 
             try
             {
@@ -1204,7 +1281,7 @@ No authorization required
 
 ## TestQueryParameterCollectionFormat
 
-> void TestQueryParameterCollectionFormat (List<string> pipe, List<string> ioutil, List<string> http, List<string> url, List<string> context)
+> void TestQueryParameterCollectionFormat (List<string> pipe, List<string> ioutil, List<string> http, List<string> url, List<string> context, string allowEmpty, Dictionary<string, string> language = null)
 
 
 
@@ -1232,10 +1309,12 @@ namespace Example
             var http = new List<string>(); // List<string> | 
             var url = new List<string>(); // List<string> | 
             var context = new List<string>(); // List<string> | 
+            var allowEmpty = "allowEmpty_example";  // string | 
+            var language = new Dictionary<string, string>(); // Dictionary<string, string> |  (optional) 
 
             try
             {
-                apiInstance.TestQueryParameterCollectionFormat(pipe, ioutil, http, url, context);
+                apiInstance.TestQueryParameterCollectionFormat(pipe, ioutil, http, url, context, allowEmpty, language);
             }
             catch (ApiException e)
             {
@@ -1258,6 +1337,8 @@ Name | Type | Description  | Notes
  **http** | [**List&lt;string&gt;**](string.md)|  | 
  **url** | [**List&lt;string&gt;**](string.md)|  | 
  **context** | [**List&lt;string&gt;**](string.md)|  | 
+ **allowEmpty** | **string**|  | 
+ **language** | [**Dictionary&lt;string, string&gt;**](string.md)|  | [optional] 
 
 ### Return type
 

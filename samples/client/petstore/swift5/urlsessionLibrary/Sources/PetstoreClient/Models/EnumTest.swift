@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class EnumTest: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.EnumTest")
+public typealias EnumTest = PetstoreClientAPI.EnumTest
+
+extension PetstoreClientAPI {
+
+public final class EnumTest: Codable, JSONEncodable, Hashable {
 
     public enum EnumString: String, Codable, CaseIterable {
         case upper = "UPPER"
@@ -41,6 +48,7 @@ public final class EnumTest: Codable, Hashable {
         self.enumNumber = enumNumber
         self.outerEnum = outerEnum
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case enumString = "enum_string"
         case enumStringRequired = "enum_string_required"
@@ -60,8 +68,6 @@ public final class EnumTest: Codable, Hashable {
         try container.encodeIfPresent(outerEnum, forKey: .outerEnum)
     }
 
-
-
     public static func == (lhs: EnumTest, rhs: EnumTest) -> Bool {
         lhs.enumString == rhs.enumString &&
         lhs.enumStringRequired == rhs.enumStringRequired &&
@@ -79,5 +85,6 @@ public final class EnumTest: Codable, Hashable {
         hasher.combine(outerEnum?.hashValue)
         
     }
+}
 
 }

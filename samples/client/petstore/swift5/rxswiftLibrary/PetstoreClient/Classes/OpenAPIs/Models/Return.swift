@@ -6,16 +6,19 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 /** Model for testing reserved words */
-public struct Return: Codable, Hashable {
+public struct Return: Codable, JSONEncodable, Hashable {
 
     public var `return`: Int?
 
     public init(`return`: Int? = nil) {
         self.`return` = `return`
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case `return` = "return"
     }
@@ -26,7 +29,5 @@ public struct Return: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(`return`, forKey: .`return`)
     }
-
-
-
 }
+

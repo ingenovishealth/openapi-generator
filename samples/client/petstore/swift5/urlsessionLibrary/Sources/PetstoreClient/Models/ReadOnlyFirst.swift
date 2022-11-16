@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class ReadOnlyFirst: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.ReadOnlyFirst")
+public typealias ReadOnlyFirst = PetstoreClientAPI.ReadOnlyFirst
+
+extension PetstoreClientAPI {
+
+public final class ReadOnlyFirst: Codable, JSONEncodable, Hashable {
 
     public var bar: String?
     public var baz: String?
@@ -17,6 +24,7 @@ public final class ReadOnlyFirst: Codable, Hashable {
         self.bar = bar
         self.baz = baz
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case bar
         case baz
@@ -30,8 +38,6 @@ public final class ReadOnlyFirst: Codable, Hashable {
         try container.encodeIfPresent(baz, forKey: .baz)
     }
 
-
-
     public static func == (lhs: ReadOnlyFirst, rhs: ReadOnlyFirst) -> Bool {
         lhs.bar == rhs.bar &&
         lhs.baz == rhs.baz
@@ -43,5 +49,6 @@ public final class ReadOnlyFirst: Codable, Hashable {
         hasher.combine(baz?.hashValue)
         
     }
+}
 
 }

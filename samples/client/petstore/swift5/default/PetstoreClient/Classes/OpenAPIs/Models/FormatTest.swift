@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct FormatTest: Codable, Hashable {
+public struct FormatTest: Codable, JSONEncodable, Hashable {
 
     public var integer: Int?
     public var int32: Int?
@@ -41,6 +43,7 @@ public struct FormatTest: Codable, Hashable {
         self.password = password
         self.bigDecimal = bigDecimal
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case integer
         case int32
@@ -77,7 +80,5 @@ public struct FormatTest: Codable, Hashable {
         try container.encode(password, forKey: .password)
         try container.encodeIfPresent(bigDecimal, forKey: .bigDecimal)
     }
-
-
-
 }
+

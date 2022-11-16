@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct Dog: Codable, Hashable {
+public struct Dog: Codable, JSONEncodable, Hashable {
 
     public private(set) var className: String
     public private(set) var color: String? = "red"
@@ -19,6 +21,7 @@ public struct Dog: Codable, Hashable {
         self.color = color
         self.breed = breed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case className
         case color
@@ -33,7 +36,5 @@ public struct Dog: Codable, Hashable {
         try container.encodeIfPresent(color, forKey: .color)
         try container.encodeIfPresent(breed, forKey: .breed)
     }
-
-
-
 }
+

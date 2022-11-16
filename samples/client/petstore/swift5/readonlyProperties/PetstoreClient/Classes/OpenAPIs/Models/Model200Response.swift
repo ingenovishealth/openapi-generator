@@ -6,10 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
 /** Model for testing model name starting with number */
-public struct Model200Response: Codable, Hashable {
+public struct Model200Response: Codable, JSONEncodable, Hashable {
 
     public private(set) var name: Int?
     public private(set) var _class: String?
@@ -18,6 +20,7 @@ public struct Model200Response: Codable, Hashable {
         self.name = name
         self._class = _class
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case _class = "class"
@@ -30,7 +33,5 @@ public struct Model200Response: Codable, Hashable {
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(_class, forKey: ._class)
     }
-
-
-
 }
+

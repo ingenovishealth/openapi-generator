@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class Capitalization: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.Capitalization")
+public typealias Capitalization = PetstoreClientAPI.Capitalization
+
+extension PetstoreClientAPI {
+
+public final class Capitalization: Codable, JSONEncodable, Hashable {
 
     public var smallCamel: String?
     public var capitalCamel: String?
@@ -26,6 +33,7 @@ public final class Capitalization: Codable, Hashable {
         self.sCAETHFlowPoints = sCAETHFlowPoints
         self.ATT_NAME = ATT_NAME
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case smallCamel
         case capitalCamel = "CapitalCamel"
@@ -47,8 +55,6 @@ public final class Capitalization: Codable, Hashable {
         try container.encodeIfPresent(ATT_NAME, forKey: .ATT_NAME)
     }
 
-
-
     public static func == (lhs: Capitalization, rhs: Capitalization) -> Bool {
         lhs.smallCamel == rhs.smallCamel &&
         lhs.capitalCamel == rhs.capitalCamel &&
@@ -68,5 +74,6 @@ public final class Capitalization: Codable, Hashable {
         hasher.combine(ATT_NAME?.hashValue)
         
     }
+}
 
 }

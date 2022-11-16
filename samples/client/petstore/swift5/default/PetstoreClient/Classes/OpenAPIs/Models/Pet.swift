@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct Pet: Codable, Hashable {
+public struct Pet: Codable, JSONEncodable, Hashable {
 
     public enum Status: String, Codable, CaseIterable {
         case available = "available"
@@ -31,6 +33,7 @@ public struct Pet: Codable, Hashable {
         self.tags = tags
         self.status = status
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case category
@@ -51,7 +54,5 @@ public struct Pet: Codable, Hashable {
         try container.encodeIfPresent(tags, forKey: .tags)
         try container.encodeIfPresent(status, forKey: .status)
     }
-
-
-
 }
+

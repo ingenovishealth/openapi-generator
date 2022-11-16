@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -28,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.client.model.BasquePig;
 import org.openapitools.client.model.DanishPig;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -304,7 +303,7 @@ public class Pig extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `BasquePig`. If the actual instanct is not `BasquePig`,
+     * Get the actual instance of `BasquePig`. If the actual instance is not `BasquePig`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `BasquePig`
@@ -315,7 +314,7 @@ public class Pig extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `DanishPig`. If the actual instanct is not `DanishPig`,
+     * Get the actual instance of `DanishPig`. If the actual instance is not `DanishPig`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `DanishPig`

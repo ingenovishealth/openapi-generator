@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct FileSchemaTestClass: Codable, Hashable {
+internal struct FileSchemaTestClass: Codable, JSONEncodable, Hashable {
 
     internal var file: File?
     internal var files: [File]?
@@ -17,6 +19,7 @@ internal struct FileSchemaTestClass: Codable, Hashable {
         self.file = file
         self.files = files
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case file
         case files
@@ -29,7 +32,5 @@ internal struct FileSchemaTestClass: Codable, Hashable {
         try container.encodeIfPresent(file, forKey: .file)
         try container.encodeIfPresent(files, forKey: .files)
     }
-
-
-
 }
+

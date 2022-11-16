@@ -1,6 +1,5 @@
 package org.openapitools.client.infrastructure
 
-import java.util.Date
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.LocalDate
@@ -16,11 +15,15 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
 object Serializer {
+    @Deprecated("Use Serializer.kotlinxSerializationAdapters instead", replaceWith = ReplaceWith("Serializer.kotlinxSerializationAdapters"))
     @JvmStatic
-    val kotlinSerializationAdapters = SerializersModule {
+    val kotlinSerializationAdapters: SerializersModule
+        get() { return kotlinxSerializationAdapters }
+
+    @JvmStatic
+    val kotlinxSerializationAdapters = SerializersModule {
         contextual(BigDecimal::class, BigDecimalAdapter)
         contextual(BigInteger::class, BigIntegerAdapter)
-        contextual(Date::class, DateAdapter)
         contextual(LocalDate::class, LocalDateAdapter)
         contextual(LocalDateTime::class, LocalDateTimeAdapter)
         contextual(OffsetDateTime::class, OffsetDateTimeAdapter)
@@ -28,11 +31,22 @@ object Serializer {
         contextual(AtomicInteger::class, AtomicIntegerAdapter)
         contextual(AtomicLong::class, AtomicLongAdapter)
         contextual(AtomicBoolean::class, AtomicBooleanAdapter)
-        contextual(URI::class, UriAdapter)
-        contextual(URL::class, UrlAdapter)
+        contextual(URI::class, URIAdapter)
+        contextual(URL::class, URLAdapter)
         contextual(StringBuilder::class, StringBuilderAdapter)
     }
 
+    @Deprecated("Use Serializer.kotlinxSerializationJson instead", replaceWith = ReplaceWith("Serializer.kotlinxSerializationJson"))
     @JvmStatic
-    val jvmJson: Json by lazy { Json { serializersModule = kotlinSerializationAdapters } }
+    val jvmJson: Json
+        get() { return kotlinxSerializationJson }
+
+    @JvmStatic
+    val kotlinxSerializationJson: Json by lazy {
+        Json {
+            serializersModule = kotlinxSerializationAdapters
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    }
 }

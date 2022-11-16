@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class DogAllOf: NSObject, Codable {
+@objc public class DogAllOf: NSObject, Codable, JSONEncodable {
 
     public var breed: String?
 
     public init(breed: String? = nil) {
         self.breed = breed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case breed
     }
@@ -25,7 +28,5 @@ import AnyCodable
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(breed, forKey: .breed)
     }
-
-
-
 }
+

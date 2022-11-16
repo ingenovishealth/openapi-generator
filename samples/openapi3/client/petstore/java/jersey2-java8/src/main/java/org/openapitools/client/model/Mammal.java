@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -28,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.client.model.Pig;
 import org.openapitools.client.model.Whale;
 import org.openapitools.client.model.Zebra;
@@ -348,7 +347,7 @@ public class Mammal extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `Pig`. If the actual instanct is not `Pig`,
+     * Get the actual instance of `Pig`. If the actual instance is not `Pig`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `Pig`
@@ -359,7 +358,7 @@ public class Mammal extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `Whale`. If the actual instanct is not `Whale`,
+     * Get the actual instance of `Whale`. If the actual instance is not `Whale`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `Whale`
@@ -370,7 +369,7 @@ public class Mammal extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `Zebra`. If the actual instanct is not `Zebra`,
+     * Get the actual instance of `Zebra`. If the actual instance is not `Zebra`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `Zebra`

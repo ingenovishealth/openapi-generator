@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class User: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.User")
+public typealias User = PetstoreClientAPI.User
+
+extension PetstoreClientAPI {
+
+public final class User: Codable, JSONEncodable, Hashable {
 
     public var id: Int64?
     public var username: String?
@@ -30,6 +37,7 @@ public final class User: Codable, Hashable {
         self.phone = phone
         self.userStatus = userStatus
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case username
@@ -55,8 +63,6 @@ public final class User: Codable, Hashable {
         try container.encodeIfPresent(userStatus, forKey: .userStatus)
     }
 
-
-
     public static func == (lhs: User, rhs: User) -> Bool {
         lhs.id == rhs.id &&
         lhs.username == rhs.username &&
@@ -80,5 +86,6 @@ public final class User: Codable, Hashable {
         hasher.combine(userStatus?.hashValue)
         
     }
+}
 
 }

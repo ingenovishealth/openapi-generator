@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class AdditionalPropertiesClass: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.AdditionalPropertiesClass")
+public typealias AdditionalPropertiesClass = PetstoreClientAPI.AdditionalPropertiesClass
+
+extension PetstoreClientAPI {
+
+public final class AdditionalPropertiesClass: Codable, JSONEncodable, Hashable {
 
     public var mapString: [String: String]?
     public var mapMapString: [String: [String: String]]?
@@ -17,6 +24,7 @@ public final class AdditionalPropertiesClass: Codable, Hashable {
         self.mapString = mapString
         self.mapMapString = mapMapString
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case mapString = "map_string"
         case mapMapString = "map_map_string"
@@ -30,8 +38,6 @@ public final class AdditionalPropertiesClass: Codable, Hashable {
         try container.encodeIfPresent(mapMapString, forKey: .mapMapString)
     }
 
-
-
     public static func == (lhs: AdditionalPropertiesClass, rhs: AdditionalPropertiesClass) -> Bool {
         lhs.mapString == rhs.mapString &&
         lhs.mapMapString == rhs.mapMapString
@@ -43,5 +49,6 @@ public final class AdditionalPropertiesClass: Codable, Hashable {
         hasher.combine(mapMapString?.hashValue)
         
     }
+}
 
 }

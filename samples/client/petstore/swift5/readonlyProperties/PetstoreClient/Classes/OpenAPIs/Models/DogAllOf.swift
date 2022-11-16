@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct DogAllOf: Codable, Hashable {
+public struct DogAllOf: Codable, JSONEncodable, Hashable {
 
     public private(set) var breed: String?
 
     public init(breed: String? = nil) {
         self.breed = breed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case breed
     }
@@ -25,7 +28,5 @@ public struct DogAllOf: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(breed, forKey: .breed)
     }
-
-
-
 }
+

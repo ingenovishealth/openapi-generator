@@ -21,12 +21,12 @@ import java.util.UUID
     fun toJson(uuid: UUID) = uuid.toString()
 
     @FromJson
-    fun fromJson(s: String) = UUID.fromString(s)
+    fun fromJson(s: String): UUID = UUID.fromString(s)
 }
 {{/moshi}}
 {{#kotlinx_serialization}}
 @Serializer(forClass = UUID::class)
-object UUIDAdapter : KSerializer<UUID> {
+{{#nonPublicApi}}internal {{/nonPublicApi}}object UUIDAdapter : KSerializer<UUID> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: UUID) {

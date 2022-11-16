@@ -22,8 +22,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import org.openapitools.client.model.AppleReq;
 import org.openapitools.client.model.BananaReq;
@@ -235,7 +233,7 @@ public class FruitReq extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `AppleReq`. If the actual instanct is not `AppleReq`,
+     * Get the actual instance of `AppleReq`. If the actual instance is not `AppleReq`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `AppleReq`
@@ -246,7 +244,7 @@ public class FruitReq extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `BananaReq`. If the actual instanct is not `BananaReq`,
+     * Get the actual instance of `BananaReq`. If the actual instance is not `BananaReq`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `BananaReq`

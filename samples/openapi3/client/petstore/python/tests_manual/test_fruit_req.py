@@ -10,21 +10,13 @@
 """
 
 
-import sys
 import unittest
 
 import petstore_api
-try:
-    from petstore_api.model import apple_req
-except ImportError:
-    apple_req = sys.modules[
-        'petstore_api.model.apple_req']
-try:
-    from petstore_api.model import banana_req
-except ImportError:
-    banana_req = sys.modules[
-        'petstore_api.model.banana_req']
+from petstore_api.model import apple_req
+from petstore_api.model import banana_req
 from petstore_api.model.fruit_req import FruitReq
+from petstore_api import schemas
 
 
 class TestFruitReq(unittest.TestCase):
@@ -42,30 +34,34 @@ class TestFruitReq(unittest.TestCase):
         # make an instance of Fruit, a composed schema oneOf model
         # banana test
         length_cm = 20.3
-        fruit = FruitReq(length_cm=length_cm)
+        fruit = FruitReq(lengthCm=length_cm)
         # check its properties
-        self.assertEqual(fruit.length_cm, length_cm)
-        self.assertEqual(fruit['length_cm'], length_cm)
-        self.assertEqual(getattr(fruit, 'length_cm'), length_cm)
+        self.assertEqual(fruit.lengthCm, length_cm)
+        self.assertEqual(fruit['lengthCm'], length_cm)
+        self.assertEqual(getattr(fruit, 'lengthCm'), length_cm)
         # check the dict representation
         self.assertEqual(
-            fruit.to_dict(),
+            fruit,
             {
-                'length_cm': length_cm,
+                'lengthCm': length_cm,
             }
         )
-        # setting a value that doesn't exist raises an exception
-        # with a key
+        # setting values after instance creation is not allowed
+        with self.assertRaises(TypeError):
+            fruit['lengthCm'] = 'some value'
+
+        # setting values after instance creation is not allowed
         with self.assertRaises(AttributeError):
-            fruit['invalid_variable'] = 'some value'
-        # with setattr
-        with self.assertRaises(AttributeError):
-            setattr(fruit, 'invalid_variable', 'some value')
+            setattr(fruit, 'lengthCm', 'some value')
 
         # getting a value that doesn't exist raises an exception
         # with a key
+        with self.assertRaises(KeyError):
+            fruit['cultivar']
         with self.assertRaises(AttributeError):
-            invalid_variable = fruit['cultivar']
+            fruit.cultivar
+        assert fruit.get_item_oapg('cultivar') is schemas.unset
+
         # with getattr
         self.assertEqual(getattr(fruit, 'cultivar', 'some value'), 'some value')
 
@@ -73,62 +69,25 @@ class TestFruitReq(unittest.TestCase):
             getattr(fruit, 'cultivar')
 
         # make sure that the ModelComposed class properties are correct
-        # model._composed_schemas stores the anyOf/allOf/oneOf info
         self.assertEqual(
-            fruit._composed_schemas,
-            {
-                'anyOf': [],
-                'allOf': [],
-                'oneOf': [
-                    apple_req.AppleReq,
-                    banana_req.BananaReq,
-                    type(None),
-                ],
-            }
+            FruitReq.MetaOapg.one_of(),
+            [
+                schemas.NoneSchema,
+                apple_req.AppleReq,
+                banana_req.BananaReq,
+            ],
         )
-        # model._composed_instances is a list of the instances that were
-        # made from the anyOf/allOf/OneOf classes in model._composed_schemas
-        for composed_instance in fruit._composed_instances:
-            if composed_instance.__class__ == banana_req.BananaReq:
-                banana_instance = composed_instance
-        self.assertEqual(
-            fruit._composed_instances,
-            [banana_instance]
-        )
-        # model._var_name_to_model_instances maps the variable name to the
-        # model instances which store that variable
-        self.assertEqual(
-            fruit._var_name_to_model_instances,
-            {
-                'length_cm': [fruit, banana_instance],
-                'cultivar': [fruit],
-                'mealy': [fruit],
-                'sweet': [fruit, banana_instance],
-            }
-        )
-        # model._additional_properties_model_instances stores a list of
-        # models which have the property additional_properties_type != None
-        self.assertEqual(
-            fruit._additional_properties_model_instances, []
-        )
-
-        # if we modify one of the properties owned by multiple
-        # model_instances we get an exception when we try to access that
-        # property because the retrieved values are not all the same
-        banana_instance.length_cm = 4.56
-        with self.assertRaises(petstore_api.ApiValueError):
-            some_length_cm = fruit.length_cm
 
         # including extra parameters raises an exception
         with self.assertRaises(petstore_api.ApiValueError):
-            fruit = FruitReq(
+            FruitReq(
                 length_cm=length_cm,
                 unknown_property='some value'
             )
 
         # including input parameters for two oneOf instances raise an exception
         with self.assertRaises(petstore_api.ApiValueError):
-            fruit = FruitReq(
+            FruitReq(
                 length_cm=length_cm,
                 cultivar='granny smith'
             )
@@ -143,41 +102,19 @@ class TestFruitReq(unittest.TestCase):
         self.assertEqual(getattr(fruit, 'cultivar'), cultivar)
         # check the dict representation
         self.assertEqual(
-            fruit.to_dict(),
+            fruit,
             {
                 'cultivar': cultivar
             }
         )
 
-        # model._composed_instances is a list of the instances that were
-        # made from the anyOf/allOf/OneOf classes in model._composed_schemas
-        for composed_instance in fruit._composed_instances:
-            if composed_instance.__class__ == apple_req.AppleReq:
-                apple_instance = composed_instance
-        self.assertEqual(
-            fruit._composed_instances,
-            [apple_instance]
-        )
-        # model._var_name_to_model_instances maps the variable name to the
-        # model instances which store that variable
-        self.assertEqual(
-            fruit._var_name_to_model_instances,
-            {
-                'length_cm': [fruit],
-                'cultivar': [fruit, apple_instance],
-                'mealy': [fruit, apple_instance],
-                'sweet': [fruit],
-            }
-        )
-        # model._additional_properties_model_instances stores a list of
-        # models which have the property additional_properties_type != None
-        self.assertEqual(
-            fruit._additional_properties_model_instances, []
-        )
-
         # we can pass in None
         fruit = FruitReq(None)
-        assert fruit is None
+        assert isinstance(fruit, schemas.Singleton)
+        assert isinstance(fruit, FruitReq)
+        assert isinstance(fruit, schemas.NoneSchema)
+        assert fruit.is_none_oapg() is True
+
 
 if __name__ == '__main__':
     unittest.main()

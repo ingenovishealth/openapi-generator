@@ -13,11 +13,9 @@
 
 package org.openapitools.client.model;
 
-import org.openapitools.client.ApiException;
 import java.util.Objects;
 import java.lang.reflect.Type;
 import java.util.Map;
-import javax.ws.rs.core.GenericType;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -46,7 +44,7 @@ public abstract class AbstractOpenApiSchema {
      *
      * @return an instance of the actual schema/object
      */
-    public abstract Map<String, GenericType> getSchemas();
+    public abstract Map<String, Class<?>> getSchemas();
 
     /**
      * Get the actual instance
@@ -132,7 +130,7 @@ public abstract class AbstractOpenApiSchema {
     }
 
     /**
-     * Is nullalble
+     * Is nullable
      *
      * @return true if it's nullable
      */

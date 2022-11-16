@@ -13,10 +13,11 @@
  */
 
 
-import { Configuration } from "./configuration";
+import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 
 export const BASE_PATH = "http://api.example.xyz/v1".replace(/\/+$/, "");
 
@@ -38,7 +39,7 @@ export const COLLECTION_FORMATS = {
  */
 export interface RequestArgs {
     url: string;
-    options: any;
+    options: AxiosRequestConfig;
 }
 
 /**

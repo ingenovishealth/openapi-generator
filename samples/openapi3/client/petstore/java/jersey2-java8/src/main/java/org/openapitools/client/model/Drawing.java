@@ -26,14 +26,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.client.model.Fruit;
 import org.openapitools.client.model.NullableShape;
 import org.openapitools.client.model.Shape;
 import org.openapitools.client.model.ShapeOrNull;
+import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.util.NoSuchElementException;
@@ -64,6 +63,8 @@ public class Drawing {
   public static final String JSON_PROPERTY_SHAPES = "shapes";
   private List<Shape> shapes = null;
 
+  public Drawing() { 
+  }
 
   public Drawing mainShape(Shape mainShape) {
     this.mainShape = mainShape;
@@ -75,7 +76,6 @@ public class Drawing {
    * @return mainShape
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_MAIN_SHAPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -101,7 +101,6 @@ public class Drawing {
    * @return shapeOrNull
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_SHAPE_OR_NULL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -127,7 +126,6 @@ public class Drawing {
    * @return nullableShape
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   @JsonIgnore
 
   public NullableShape getNullableShape() {
@@ -169,7 +167,6 @@ public class Drawing {
    * @return shapes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
   @JsonProperty(JSON_PROPERTY_SHAPES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -236,14 +233,25 @@ public class Drawing {
     Drawing drawing = (Drawing) o;
     return Objects.equals(this.mainShape, drawing.mainShape) &&
         Objects.equals(this.shapeOrNull, drawing.shapeOrNull) &&
-        Objects.equals(this.nullableShape, drawing.nullableShape) &&
+        equalsNullable(this.nullableShape, drawing.nullableShape) &&
         Objects.equals(this.shapes, drawing.shapes)&&
         Objects.equals(this.additionalProperties, drawing.additionalProperties);
   }
 
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(mainShape, shapeOrNull, nullableShape, shapes, additionalProperties);
+    return Objects.hash(mainShape, shapeOrNull, hashCodeNullable(nullableShape), shapes, additionalProperties);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
