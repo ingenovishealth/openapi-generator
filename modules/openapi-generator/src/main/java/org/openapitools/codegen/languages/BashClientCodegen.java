@@ -26,7 +26,7 @@ import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.meta.features.*;
@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static org.openapitools.codegen.utils.CamelizeOption.LOWERCASE_FIRST_LETTER;
 import static org.openapitools.codegen.utils.StringUtils.*;
 
 public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
@@ -75,6 +76,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
      *
      * @return the CodegenType for this generator
      */
+    @Override
     public CodegenType getTag() {
         return CodegenType.CLIENT;
     }
@@ -85,6 +87,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
      *
      * @return the friendly name for the generator
      */
+    @Override
     public String getName() {
         return "bash";
     }
@@ -95,6 +98,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
      *
      * @return A string value for the help message
      */
+    @Override
     public String getHelp() {
         return "Generates a Bash client script based on cURL.";
     }
@@ -179,7 +183,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         /**
          * Allow the user to force the script to always include certain cURL
-         * comamnds
+         * commands
          */
         cliOptions.add(CliOption.newString(CURL_OPTIONS, "Default cURL options"));
         cliOptions.add(CliOption.newBoolean(PROCESS_MARKDOWN,
@@ -206,7 +210,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
         /**
          * Bash reserved words.
          */
-        reservedWords = new HashSet<String>(
+        reservedWords = new HashSet<>(
                 Arrays.asList(
                         "case",
                         "do",
@@ -380,6 +384,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
      * Location to write model files.  You can use the modelPackage() as defined
      * when the class is instantiated.
      */
+    @Override
     public String modelFileFolder() {
         return outputFolder;
     }
@@ -497,7 +502,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
                 } else if ("pipes".equals(p.collectionFormat)) {
                     p.vendorExtensions.put("x-codegen-collection-pipes", true);
                 } else {
-                    LOGGER.warn("Unsupported collection format in Bash generator: " + p.collectionFormat);
+                    LOGGER.warn("Unsupported collection format in Bash generator: {}", p.collectionFormat);
                 }
             }
         }
@@ -509,6 +514,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
     /**
      * Override with any special text escaping logic
      */
+    @Override
     @SuppressWarnings("static-method")
     public String escapeText(String input) {
         if (input == null) {
@@ -524,7 +530,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
          * remove standalone '\'
          *
          * replace " with \"
-         * outter unescape to retain the original multi-byte characters
+         * outer unescape to retain the original multi-byte characters
          */
         result = escapeUnsafeCharacters(
                 StringEscapeUtils.unescapeJava(
@@ -605,6 +611,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
      * @param input String to be cleaned up
      * @return string with unsafe characters removed or escaped
      */
+    @Override
     public String escapeUnsafeCharacters(String input) {
 
         /**
@@ -778,7 +785,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else if ("array".equalsIgnoreCase(type) || "map".equalsIgnoreCase(type)) {
             // skip map/array as it will be handled below
         } else {
-            LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
+            LOGGER.warn("Type {} not handled properly in setParameterExampleValue", type);
         }
 
         if (example == null) {
@@ -801,25 +808,27 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toOperationId(String operationId) {
         // rename to empty_method_name_1 (e.g.) if method name is empty
         if (StringUtils.isEmpty(operationId)) {
-            operationId = camelize("empty_method_name_" + emptyMethodNameCounter++, true);
-            LOGGER.warn("Empty method name (operationId) found. Renamed to " + operationId);
+            operationId = camelize("empty_method_name_" + emptyMethodNameCounter++, LOWERCASE_FIRST_LETTER);
+            LOGGER.warn("Empty method name (operationId) found. Renamed to {}", operationId);
             return operationId;
         }
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
             String newOperationId = underscore("call" + camelize(operationId));
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            LOGGER.warn("{} (reserved word) cannot be used as method name. Renamed to {}", operationId, newOperationId);
             return newOperationId;
         }
 
         // operationId starts with a number
         if (operationId.matches("^\\d.*")) {
-            LOGGER.warn(operationId + " (starting with a number) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            LOGGER.warn("{} (starting with a number) cannot be used as method name. Renamed to {}", operationId, underscore(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
-        return camelize(sanitizeName(operationId), true);
+        return camelize(sanitizeName(operationId), LOWERCASE_FIRST_LETTER);
     }
 
+    @Override
+    public GeneratorLanguage generatorLanguage() { return GeneratorLanguage.BASH; }
 }

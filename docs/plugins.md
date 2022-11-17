@@ -16,7 +16,7 @@ Add to your `build->plugins` section (default phase is `generate-sources` phase)
     <groupId>org.openapitools</groupId>
     <artifactId>openapi-generator-maven-plugin</artifactId>
     <!-- RELEASE_VERSION -->
-    <version>5.1.0</version>
+    <version>6.0.0</version>
     <!-- /RELEASE_VERSION -->
     <executions>
         <execution>
@@ -45,7 +45,7 @@ For full details of all options, see the [plugin README](https://github.com/Open
 
 ### Dependencies
 
-The generated models use commonly use Swagger v2 annotations like `@ApiModelProperty`. A user may add Swagger v3 annotations:
+The generated models use commonly used Swagger v2 annotations like `@ApiModelProperty`. A user may add Swagger v3 annotations:
 
 ```xml
 <dependency>

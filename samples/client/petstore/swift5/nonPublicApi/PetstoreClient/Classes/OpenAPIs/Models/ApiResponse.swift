@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct ApiResponse: Codable, Hashable {
+internal struct ApiResponse: Codable, JSONEncodable, Hashable {
 
     internal var code: Int?
     internal var type: String?
@@ -19,6 +21,7 @@ internal struct ApiResponse: Codable, Hashable {
         self.type = type
         self.message = message
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case code
         case type
@@ -33,7 +36,5 @@ internal struct ApiResponse: Codable, Hashable {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(message, forKey: .message)
     }
-
-
-
 }
+

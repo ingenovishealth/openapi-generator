@@ -6,15 +6,23 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class DogAllOf: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.DogAllOf")
+public typealias DogAllOf = PetstoreClientAPI.DogAllOf
+
+extension PetstoreClientAPI {
+
+public final class DogAllOf: Codable, JSONEncodable, Hashable {
 
     public var breed: String?
 
     public init(breed: String? = nil) {
         self.breed = breed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case breed
     }
@@ -26,8 +34,6 @@ public final class DogAllOf: Codable, Hashable {
         try container.encodeIfPresent(breed, forKey: .breed)
     }
 
-
-
     public static func == (lhs: DogAllOf, rhs: DogAllOf) -> Bool {
         lhs.breed == rhs.breed
         
@@ -37,5 +43,6 @@ public final class DogAllOf: Codable, Hashable {
         hasher.combine(breed?.hashValue)
         
     }
+}
 
 }

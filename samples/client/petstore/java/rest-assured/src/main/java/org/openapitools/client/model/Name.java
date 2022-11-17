@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -30,7 +28,6 @@ import org.hibernate.validator.constraints.*;
 /**
  * Model for testing model name same as property name
  */
-@ApiModel(description = "Model for testing model name same as property name")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Name {
   public static final String SERIALIZED_NAME_NAME = "name";
@@ -49,6 +46,18 @@ public class Name {
   @SerializedName(SERIALIZED_NAME_123NUMBER)
   private Integer _123number;
 
+  public Name() {
+  }
+
+  
+  public Name(
+     Integer snakeCase, 
+     Integer _123number
+  ) {
+    this();
+    this.snakeCase = snakeCase;
+    this._123number = _123number;
+  }
 
   public Name name(Integer name) {
     
@@ -60,8 +69,9 @@ public class Name {
    * Get name
    * @return name
   **/
+  @javax.annotation.Nonnull
   @NotNull
-  @ApiModelProperty(required = true, value = "")
+
 
   public Integer getName() {
     return name;
@@ -78,7 +88,7 @@ public class Name {
    * @return snakeCase
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+
 
   public Integer getSnakeCase() {
     return snakeCase;
@@ -98,7 +108,7 @@ public class Name {
    * @return property
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+
 
   public String getProperty() {
     return property;
@@ -115,7 +125,7 @@ public class Name {
    * @return _123number
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+
 
   public Integer get123number() {
     return _123number;

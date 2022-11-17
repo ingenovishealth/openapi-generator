@@ -6,10 +6,17 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
+
+@available(*, deprecated, renamed: "PetstoreClientAPI.Model200Response")
+public typealias Model200Response = PetstoreClientAPI.Model200Response
+
+extension PetstoreClientAPI {
 
 /** Model for testing model name starting with number */
-public final class Model200Response: Codable, Hashable {
+public final class Model200Response: Codable, JSONEncodable, Hashable {
 
     public var name: Int?
     public var _class: String?
@@ -18,6 +25,7 @@ public final class Model200Response: Codable, Hashable {
         self.name = name
         self._class = _class
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case _class = "class"
@@ -31,8 +39,6 @@ public final class Model200Response: Codable, Hashable {
         try container.encodeIfPresent(_class, forKey: ._class)
     }
 
-
-
     public static func == (lhs: Model200Response, rhs: Model200Response) -> Bool {
         lhs.name == rhs.name &&
         lhs._class == rhs._class
@@ -44,5 +50,6 @@ public final class Model200Response: Codable, Hashable {
         hasher.combine(_class?.hashValue)
         
     }
+}
 
 }

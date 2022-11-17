@@ -1,4 +1,4 @@
-name: "Ingenovis Health Customer 5.1.1 Docker Build"
+name: "Ingenovis Health Customer 6.2.1 Docker Build"
 on:
   workflow_dispatch:
   push:
@@ -28,4 +28,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ingenovishealth/openapi-generator-cli:5.1.1-jtbeach
+          tags: ingenovishealth/openapi-generator-cli:6.2.1-jtbeach

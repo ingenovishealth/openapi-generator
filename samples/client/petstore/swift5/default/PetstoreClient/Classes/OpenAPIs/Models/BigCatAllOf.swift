@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct BigCatAllOf: Codable, Hashable {
+public struct BigCatAllOf: Codable, JSONEncodable, Hashable {
 
     public enum Kind: String, Codable, CaseIterable {
         case lions = "lions"
@@ -21,6 +23,7 @@ public struct BigCatAllOf: Codable, Hashable {
     public init(kind: Kind? = nil) {
         self.kind = kind
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case kind
     }
@@ -31,7 +34,5 @@ public struct BigCatAllOf: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(kind, forKey: .kind)
     }
-
-
-
 }
+

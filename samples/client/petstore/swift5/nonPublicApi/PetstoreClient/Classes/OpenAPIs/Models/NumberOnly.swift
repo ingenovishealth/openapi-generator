@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct NumberOnly: Codable, Hashable {
+internal struct NumberOnly: Codable, JSONEncodable, Hashable {
 
     internal var justNumber: Double?
 
     internal init(justNumber: Double? = nil) {
         self.justNumber = justNumber
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case justNumber = "JustNumber"
     }
@@ -25,7 +28,5 @@ internal struct NumberOnly: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(justNumber, forKey: .justNumber)
     }
-
-
-
 }
+

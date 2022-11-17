@@ -36,7 +36,7 @@ public class FakeApi {
   }
 
   /**
-   * Get the API cilent
+   * Get the API client
    *
    * @return API client
    */
@@ -45,7 +45,7 @@ public class FakeApi {
   }
 
   /**
-   * Set the API cilent
+   * Set the API client
    *
    * @param apiClient an instance of API client
    */
@@ -925,7 +925,7 @@ if (booleanGroup != null)
      * @http.response.details
        <table summary="Response Details" border="1">
          <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-         <tr><td> 400 </td><td> Someting wrong </td><td>  -  </td></tr>
+         <tr><td> 400 </td><td> Something wrong </td><td>  -  </td></tr>
        </table>
      
      */
@@ -941,7 +941,7 @@ if (booleanGroup != null)
      * @http.response.details
        <table summary="Response Details" border="1">
          <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-         <tr><td> 400 </td><td> Someting wrong </td><td>  -  </td></tr>
+         <tr><td> 400 </td><td> Something wrong </td><td>  -  </td></tr>
        </table>
 
      */
@@ -1164,7 +1164,7 @@ if (param2 != null)
     }
     
     // create path and map variables
-    String localVarPath = "/fake/test-query-paramters";
+    String localVarPath = "/fake/test-query-parameters";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();

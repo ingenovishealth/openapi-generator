@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -28,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.client.model.EquilateralTriangle;
 import org.openapitools.client.model.IsoscelesTriangle;
 import org.openapitools.client.model.ScaleneTriangle;
@@ -348,7 +347,7 @@ public class Triangle extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `EquilateralTriangle`. If the actual instanct is not `EquilateralTriangle`,
+     * Get the actual instance of `EquilateralTriangle`. If the actual instance is not `EquilateralTriangle`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `EquilateralTriangle`
@@ -359,7 +358,7 @@ public class Triangle extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `IsoscelesTriangle`. If the actual instanct is not `IsoscelesTriangle`,
+     * Get the actual instance of `IsoscelesTriangle`. If the actual instance is not `IsoscelesTriangle`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `IsoscelesTriangle`
@@ -370,7 +369,7 @@ public class Triangle extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `ScaleneTriangle`. If the actual instanct is not `ScaleneTriangle`,
+     * Get the actual instance of `ScaleneTriangle`. If the actual instance is not `ScaleneTriangle`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `ScaleneTriangle`

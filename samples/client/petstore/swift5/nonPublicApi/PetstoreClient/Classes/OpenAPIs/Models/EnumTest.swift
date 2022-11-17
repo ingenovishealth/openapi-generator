@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct EnumTest: Codable, Hashable {
+internal struct EnumTest: Codable, JSONEncodable, Hashable {
 
     internal enum EnumString: String, Codable, CaseIterable {
         case upper = "UPPER"
@@ -41,6 +43,7 @@ internal struct EnumTest: Codable, Hashable {
         self.enumNumber = enumNumber
         self.outerEnum = outerEnum
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case enumString = "enum_string"
         case enumStringRequired = "enum_string_required"
@@ -59,7 +62,5 @@ internal struct EnumTest: Codable, Hashable {
         try container.encodeIfPresent(enumNumber, forKey: .enumNumber)
         try container.encodeIfPresent(outerEnum, forKey: .outerEnum)
     }
-
-
-
 }
+

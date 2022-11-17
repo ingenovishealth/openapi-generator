@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -28,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.client.model.Quadrilateral;
 import org.openapitools.client.model.Triangle;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -311,7 +310,7 @@ public class NullableShape extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `Quadrilateral`. If the actual instanct is not `Quadrilateral`,
+     * Get the actual instance of `Quadrilateral`. If the actual instance is not `Quadrilateral`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `Quadrilateral`
@@ -322,7 +321,7 @@ public class NullableShape extends AbstractOpenApiSchema {
     }
 
     /**
-     * Get the actual instance of `Triangle`. If the actual instanct is not `Triangle`,
+     * Get the actual instance of `Triangle`. If the actual instance is not `Triangle`,
      * the ClassCastException will be thrown.
      *
      * @return The actual instance of `Triangle`

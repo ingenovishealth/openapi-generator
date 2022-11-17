@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct Capitalization: Codable, Hashable {
+public struct Capitalization: Codable, JSONEncodable, Hashable {
 
     public private(set) var smallCamel: String?
     public private(set) var capitalCamel: String?
@@ -26,6 +28,7 @@ public struct Capitalization: Codable, Hashable {
         self.sCAETHFlowPoints = sCAETHFlowPoints
         self.ATT_NAME = ATT_NAME
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case smallCamel
         case capitalCamel = "CapitalCamel"
@@ -46,7 +49,5 @@ public struct Capitalization: Codable, Hashable {
         try container.encodeIfPresent(sCAETHFlowPoints, forKey: .sCAETHFlowPoints)
         try container.encodeIfPresent(ATT_NAME, forKey: .ATT_NAME)
     }
-
-
-
 }
+

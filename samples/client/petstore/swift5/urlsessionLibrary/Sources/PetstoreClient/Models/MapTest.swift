@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class MapTest: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.MapTest")
+public typealias MapTest = PetstoreClientAPI.MapTest
+
+extension PetstoreClientAPI {
+
+public final class MapTest: Codable, JSONEncodable, Hashable {
 
     public enum MapOfEnumString: String, Codable, CaseIterable {
         case upper = "UPPER"
@@ -25,6 +32,7 @@ public final class MapTest: Codable, Hashable {
         self.directMap = directMap
         self.indirectMap = indirectMap
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case mapMapOfString = "map_map_of_string"
         case mapOfEnumString = "map_of_enum_string"
@@ -42,8 +50,6 @@ public final class MapTest: Codable, Hashable {
         try container.encodeIfPresent(indirectMap, forKey: .indirectMap)
     }
 
-
-
     public static func == (lhs: MapTest, rhs: MapTest) -> Bool {
         lhs.mapMapOfString == rhs.mapMapOfString &&
         lhs.mapOfEnumString == rhs.mapOfEnumString &&
@@ -59,5 +65,6 @@ public final class MapTest: Codable, Hashable {
         hasher.combine(indirectMap?.hashValue)
         
     }
+}
 
 }

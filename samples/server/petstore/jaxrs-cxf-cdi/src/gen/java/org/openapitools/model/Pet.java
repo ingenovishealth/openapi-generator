@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 import java.util.Objects;
 
-import javax.xml.bind.annotation.*;
 
 @ApiModel(description = "A pet for sale in the pet store")
 public class Pet   {
@@ -28,16 +27,14 @@ public class Pet   {
 
   private String name;
 
-  private List<String> photoUrls = new ArrayList<String>();
+  private List<String> photoUrls = new ArrayList<>();
 
   private List<Tag> tags = null;
 
 
-@XmlType(name="StatusEnum")
-@XmlEnum(String.class)
 public enum StatusEnum {
 
-    @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
+    @JsonProperty("available") AVAILABLE(String.valueOf("available")), @JsonProperty("pending") PENDING(String.valueOf("pending")), @JsonProperty("sold") SOLD(String.valueOf("sold"));
 
 
     private String value;
@@ -166,7 +163,7 @@ public enum StatusEnum {
 
   public Pet addTagsItem(Tag tagsItem) {
     if (this.tags == null) {
-      this.tags = new ArrayList<Tag>();
+      this.tags = new ArrayList<>();
     }
     this.tags.add(tagsItem);
     return this;

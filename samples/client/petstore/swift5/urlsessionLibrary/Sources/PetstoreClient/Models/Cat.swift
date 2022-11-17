@@ -6,9 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public final class Cat: Codable, Hashable {
+@available(*, deprecated, renamed: "PetstoreClientAPI.Cat")
+public typealias Cat = PetstoreClientAPI.Cat
+
+extension PetstoreClientAPI {
+
+public final class Cat: Codable, JSONEncodable, Hashable {
 
     public var className: String
     public var color: String? = "red"
@@ -19,6 +26,7 @@ public final class Cat: Codable, Hashable {
         self.color = color
         self.declawed = declawed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case className
         case color
@@ -34,8 +42,6 @@ public final class Cat: Codable, Hashable {
         try container.encodeIfPresent(declawed, forKey: .declawed)
     }
 
-
-
     public static func == (lhs: Cat, rhs: Cat) -> Bool {
         lhs.className == rhs.className &&
         lhs.color == rhs.color &&
@@ -49,5 +55,6 @@ public final class Cat: Codable, Hashable {
         hasher.combine(declawed?.hashValue)
         
     }
+}
 
 }

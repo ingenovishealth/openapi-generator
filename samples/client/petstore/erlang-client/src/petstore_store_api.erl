@@ -5,7 +5,7 @@
          get_order_by_id/2, get_order_by_id/3,
          place_order/2, place_order/3]).
 
--define(BASE_URL, "/v2").
+-define(BASE_URL, <<"/v2">>).
 
 %% @doc Delete purchase order by ID
 %% For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -19,7 +19,7 @@ delete_order(Ctx, OrderId, Optional) ->
     Cfg = maps:get(cfg, Optional, application:get_env(kuberl, config, #{})),
 
     Method = delete,
-    Path = ["/store/order/", OrderId, ""],
+    Path = [<<"/store/order/", OrderId, "">>],
     QS = [],
     Headers = [],
     Body1 = [],
@@ -40,7 +40,7 @@ get_inventory(Ctx, Optional) ->
     Cfg = maps:get(cfg, Optional, application:get_env(kuberl, config, #{})),
 
     Method = get,
-    Path = ["/store/inventory"],
+    Path = [<<"/store/inventory">>],
     QS = [],
     Headers = [],
     Body1 = [],
@@ -50,7 +50,7 @@ get_inventory(Ctx, Optional) ->
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, ContentTypeHeader++Headers, Body1, Opts, Cfg).
 
 %% @doc Find purchase order by ID
-%% For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+%% For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions
 -spec get_order_by_id(ctx:ctx(), integer()) -> {ok, petstore_order:petstore_order(), petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 get_order_by_id(Ctx, OrderId) ->
     get_order_by_id(Ctx, OrderId, #{}).
@@ -61,7 +61,7 @@ get_order_by_id(Ctx, OrderId, Optional) ->
     Cfg = maps:get(cfg, Optional, application:get_env(kuberl, config, #{})),
 
     Method = get,
-    Path = ["/store/order/", OrderId, ""],
+    Path = [<<"/store/order/", OrderId, "">>],
     QS = [],
     Headers = [],
     Body1 = [],
@@ -82,7 +82,7 @@ place_order(Ctx, PetstoreOrder, Optional) ->
     Cfg = maps:get(cfg, Optional, application:get_env(kuberl, config, #{})),
 
     Method = post,
-    Path = ["/store/order"],
+    Path = [<<"/store/order">>],
     QS = [],
     Headers = [],
     Body1 = PetstoreOrder,

@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct FormatTest: Codable, Hashable {
+public struct FormatTest: Codable, JSONEncodable, Hashable {
 
     public private(set) var integer: Int?
     public private(set) var int32: Int?
@@ -39,6 +41,7 @@ public struct FormatTest: Codable, Hashable {
         self.uuid = uuid
         self.password = password
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case integer
         case int32
@@ -73,7 +76,5 @@ public struct FormatTest: Codable, Hashable {
         try container.encodeIfPresent(uuid, forKey: .uuid)
         try container.encode(password, forKey: .password)
     }
-
-
-
 }
+

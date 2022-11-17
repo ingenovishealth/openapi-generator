@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct OuterComposite: Codable, Hashable {
+internal struct OuterComposite: Codable, JSONEncodable, Hashable {
 
     internal var myNumber: Double?
     internal var myString: String?
@@ -19,6 +21,7 @@ internal struct OuterComposite: Codable, Hashable {
         self.myString = myString
         self.myBoolean = myBoolean
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case myNumber = "my_number"
         case myString = "my_string"
@@ -33,7 +36,5 @@ internal struct OuterComposite: Codable, Hashable {
         try container.encodeIfPresent(myString, forKey: .myString)
         try container.encodeIfPresent(myBoolean, forKey: .myBoolean)
     }
-
-
-
 }
+

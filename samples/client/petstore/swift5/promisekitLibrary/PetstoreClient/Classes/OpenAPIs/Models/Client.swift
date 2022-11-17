@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct Client: Codable, Hashable {
+public struct Client: Codable, JSONEncodable, Hashable {
 
     public var client: String?
 
     public init(client: String? = nil) {
         self.client = client
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case client
     }
@@ -25,7 +28,5 @@ public struct Client: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(client, forKey: .client)
     }
-
-
-
 }
+

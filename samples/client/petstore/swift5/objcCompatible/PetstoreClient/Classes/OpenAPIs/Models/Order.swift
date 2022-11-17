@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class Order: NSObject, Codable {
+@objc public class Order: NSObject, Codable, JSONEncodable {
 
     public enum Status: String, Codable, CaseIterable {
         case placed = "placed"
@@ -51,6 +53,7 @@ import AnyCodable
         self.status = status
         self.complete = complete
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case _id = "id"
         case petId
@@ -71,7 +74,5 @@ import AnyCodable
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(complete, forKey: .complete)
     }
-
-
-
 }
+

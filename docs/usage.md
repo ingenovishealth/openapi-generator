@@ -555,7 +555,7 @@ openapi-generator-cli generate \
     -i petstore.yaml \
     -g kotlin-spring \
     -o out \
-    --additional-properties=library=spring-boot,beanValidations=true,swaggerAnnotations=true,serviceImplementation=true \
+    --additional-properties=library=spring-boot,beanValidations=true,serviceImplementation=true \
     --import-mappings=DateTime=java.time.LocalDateTime \
     --type-mappings=DateTime=java.time.LocalDateTime
 ```
@@ -629,7 +629,7 @@ supportsES6: true
 ```
 
 The settings are passed exactly the same as for `config.json`. The most important part is the file extension. Supported values are `yml` or `yaml`. 
-The name of the file should be `config.yml` or `config.yaml` (in our example it will be `config.yaml`.
+The name of the file should be `config.yml` or `config.yaml` (in our example it will be `config.yaml`).
 
 ```bash
 openapi-generator-cli generate -i petstore.yaml -g typescript-fetch -o out \

@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -54,8 +52,10 @@ public class TypeHolderExample {
 
   public static final String SERIALIZED_NAME_ARRAY_ITEM = "array_item";
   @SerializedName(SERIALIZED_NAME_ARRAY_ITEM)
-  private List<Integer> arrayItem = new ArrayList<Integer>();
+  private List<Integer> arrayItem = new ArrayList<>();
 
+  public TypeHolderExample() {
+  }
 
   public TypeHolderExample stringItem(String stringItem) {
     
@@ -67,7 +67,7 @@ public class TypeHolderExample {
    * Get stringItem
    * @return stringItem
   **/
-  @ApiModelProperty(example = "what", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public String getStringItem() {
     return stringItem;
@@ -89,7 +89,7 @@ public class TypeHolderExample {
    * Get numberItem
    * @return numberItem
   **/
-  @ApiModelProperty(example = "1.234", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public BigDecimal getNumberItem() {
     return numberItem;
@@ -111,7 +111,7 @@ public class TypeHolderExample {
    * Get floatItem
    * @return floatItem
   **/
-  @ApiModelProperty(example = "1.234", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public Float getFloatItem() {
     return floatItem;
@@ -133,7 +133,7 @@ public class TypeHolderExample {
    * Get integerItem
    * @return integerItem
   **/
-  @ApiModelProperty(example = "-2", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public Integer getIntegerItem() {
     return integerItem;
@@ -155,7 +155,7 @@ public class TypeHolderExample {
    * Get boolItem
    * @return boolItem
   **/
-  @ApiModelProperty(example = "true", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public Boolean getBoolItem() {
     return boolItem;
@@ -182,7 +182,7 @@ public class TypeHolderExample {
    * Get arrayItem
    * @return arrayItem
   **/
-  @ApiModelProperty(example = "[0, 1, 2, 3]", required = true, value = "")
+  @javax.annotation.Nonnull
 
   public List<Integer> getArrayItem() {
     return arrayItem;

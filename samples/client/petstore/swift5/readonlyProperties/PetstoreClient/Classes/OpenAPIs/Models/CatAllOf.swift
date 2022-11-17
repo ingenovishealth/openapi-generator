@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-public struct CatAllOf: Codable, Hashable {
+public struct CatAllOf: Codable, JSONEncodable, Hashable {
 
     public private(set) var declawed: Bool?
 
     public init(declawed: Bool? = nil) {
         self.declawed = declawed
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case declawed
     }
@@ -25,7 +28,5 @@ public struct CatAllOf: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(declawed, forKey: .declawed)
     }
-
-
-
 }
+

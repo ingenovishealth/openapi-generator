@@ -6,15 +6,18 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-@objc public class Client: NSObject, Codable {
+@objc public class Client: NSObject, Codable, JSONEncodable {
 
     public var client: String?
 
     public init(client: String? = nil) {
         self.client = client
     }
+
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case client
     }
@@ -25,7 +28,5 @@ import AnyCodable
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(client, forKey: .client)
     }
-
-
-
 }
+

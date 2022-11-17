@@ -49,6 +49,12 @@ public:
     /// </summary>
     bool validate(std::stringstream& msg) const;
 
+    /// <summary>
+    /// Helper overload for validate. Used when one model stores another model and calls it's validate.
+    /// Not meant to be called outside that case.
+    /// </summary>
+    bool validate(std::stringstream& msg, const std::string& pathPrefix) const;
+
     bool operator==(const Pet& rhs) const;
     bool operator!=(const Pet& rhs) const;
 
@@ -65,8 +71,8 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    Category getCategory() const;
-    void setCategory(Category const& value);
+    org::openapitools::server::model::Category getCategory() const;
+    void setCategory(org::openapitools::server::model::Category const& value);
     bool categoryIsSet() const;
     void unsetCategory();
     /// <summary>
@@ -82,8 +88,8 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    std::vector<Tag> getTags() const;
-    void setTags(std::vector<Tag> const& value);
+    std::vector<org::openapitools::server::model::Tag> getTags() const;
+    void setTags(std::vector<org::openapitools::server::model::Tag> const& value);
     bool tagsIsSet() const;
     void unsetTags();
     /// <summary>
@@ -99,19 +105,17 @@ public:
 protected:
     int64_t m_Id;
     bool m_IdIsSet;
-    Category m_Category;
+    org::openapitools::server::model::Category m_Category;
     bool m_CategoryIsSet;
     std::string m_Name;
 
     std::vector<std::string> m_PhotoUrls;
 
-    std::vector<Tag> m_Tags;
+    std::vector<org::openapitools::server::model::Tag> m_Tags;
     bool m_TagsIsSet;
     std::string m_Status;
     bool m_StatusIsSet;
-
-    // Helper overload for validate. Used when one model stores another model and calls it's validate.
-    bool validate(std::stringstream& msg, const std::string& pathPrefix) const;
+    
 };
 
 } // namespace org::openapitools::server::model

@@ -6,9 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
 import AnyCodable
+#endif
 
-internal struct User: Codable, Hashable {
+internal struct User: Codable, JSONEncodable, Hashable {
 
     internal var id: Int64?
     internal var username: String?
@@ -30,6 +32,7 @@ internal struct User: Codable, Hashable {
         self.phone = phone
         self.userStatus = userStatus
     }
+
     internal enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case username
@@ -54,7 +57,5 @@ internal struct User: Codable, Hashable {
         try container.encodeIfPresent(phone, forKey: .phone)
         try container.encodeIfPresent(userStatus, forKey: .userStatus)
     }
-
-
-
 }
+
